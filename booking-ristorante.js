@@ -80,11 +80,22 @@ function sendBooking() {
     // retrieve form data
     bookingForm.append('nome', document.forms[0].nome.value);
     bookingForm.append('email', document.forms[0].email.value);
-   // console.log('prenotazione inviata');
-    /* fetch('bookingScript', {
-        body: bookingForm,
-        method: 'post'
-    }); */
-    Booking.messageStatus.textContent = "la prenotazione è andata a buon fine";
+    // modifica
+    const dati = Object.fromEntries(bookingForm.entries());
+    fetchDati(dati).then(dati => console.log(dati));
+    // fine modifica
+    Booking.messageStatus.textContent = "Prenotazione effettuata con successo";
     document.forms[0].reset();
+}
+
+async function fetchDati(bookingForm) {
+    let dati = await fetch('prenotazioni.php', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingForm)
+    });
+    return dati.json();
+
 }
