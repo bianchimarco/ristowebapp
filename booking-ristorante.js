@@ -97,5 +97,4 @@ async function fetchDati(bookingForm) {
         body: JSON.stringify(bookingForm)
     });
     return dati.json();
-
 }
